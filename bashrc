@@ -1,11 +1,11 @@
-# =============================================================
-#            ______   ____ |__|______|__|  | __
-#            \____ \_/ __ \|  \_  __ \  |  |/ /
-#            |  |_> >  ___/|  ||  | \/  |    < 
-#            |   __/ \___  >__||__|  |__|__|_ \
-#            |__|        \/                  \/
-# =============================================================
- 
+#                __               __             
+#               / /_  ____ ______/ /_  __________
+#              / __ \/ __ `/ ___/ __ \/ ___/ ___/
+#             / /_/ / /_/ (__  ) / / / /  / /__  
+#            /_.___/\__,_/____/_/ /_/_/   \___/  
+#           =====================================             
+#                           K-9
+
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
@@ -28,7 +28,7 @@ export HISTFILESIZE=10000
 export HISTTIMEFORMAT="%F %T "
   
 #for tmux: export 256color
-[ -n "$TMUX" ] && export TERM="xterm-256color"
+#[ -n "$TMUX" ] && export TERM="xterm-256color"
 
   
 # -- Alias
@@ -44,6 +44,7 @@ alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 alias rm='rm -I --preserve-root'
 alias less='less -R'
+alias tmux='TERM=xterm-256color tmux' # fixes bold fonts in vim while using tmux
 
   
 # --  Fancy Prompt
@@ -51,11 +52,11 @@ PS1="\[\033[0;37m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0
 
 
 # -- Setup colors for less and man
-# note: the exist code to use 256 colors is "38;5"
+# note: the exit code for 256 colors is "38;5"
 export LESS_TERMCAP_mb=$'\E[1;38;5;74m'    # begin bold
 export LESS_TERMCAP_md=$'\E[1;38;5;74m'    # begin bold
-export LESS_TERMCAP_me=$'\E[0m'             # turn off bold, blink, underline 
-export LESS_TERMCAP_se=$'\E[0m'             # stop standout
+export LESS_TERMCAP_me=$'\E[0m'            # turn off bold, blink, underline 
+export LESS_TERMCAP_se=$'\E[0m'            # stop standout
 export LESS_TERMCAP_so=$'\E[7;38;5;220m'   # start standout
-export LESS_TERMCAP_ue=$'\E[0m'             # stop underline
+export LESS_TERMCAP_ue=$'\E[0m'            # stop underline
 export LESS_TERMCAP_us=$'\E[4;38;5;105m'   # start underline

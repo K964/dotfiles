@@ -1,10 +1,10 @@
-" =============================================================
-"            ______   ____ |__|______|__|  | __
-"            \____ \_/ __ \|  \_  __ \  |  |/ /
-"            |  |_> >  ___/|  ||  | \/  |    <
-"            |   __/ \___  >__||__|  |__|__|_ \
-"            |__|        \/                  \/
-" =============================================================
+"                      _                    
+"               _   __(_)___ ___  __________
+"              | | / / / __ `__ \/ ___/ ___/
+"              | |/ / / / / / / / /  / /__  
+"              |___/_/_/ /_/ /_/_/   \___/  
+"               ============================
+"                           K-9
 
 
 "
@@ -17,6 +17,24 @@
 "    -press C-v to enter visual-block mode
 "    -select the lines to be commented
 "    -press C-c to add the comment or C-s to delete the comment characters
+"
+
+" Required plugins
+"     bufexplorer
+"     emmet-vim
+"     matchit
+"     neocomplete.vim
+"     nerdtree
+"     snipmate.vim
+"     tagbar
+"     tags
+"     tlib_vim
+"     vim-addon-mw-utils
+"     vim-airline
+"     vim-colors-solarized
+"     vim-go
+"     vim-instant-markdown
+"     vim-surround
 
 
 " Set <leader>
