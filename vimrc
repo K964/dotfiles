@@ -24,32 +24,33 @@
 "     emmet-vim
 "     matchit
 "     neocomplete.vim
+"     neosnippet
+"     neosnippet-snippets
 "     nerdtree
-"     snipmate.vim
 "     tagbar
 "     tags
-"     tlib_vim
-"     vim-addon-mw-utils
+"     tlib_vim              (who needs this?)
+"     vim-addon-mw-utils    (who needs this?)
 "     vim-airline
 "     vim-colors-solarized
 "     vim-go
 "     vim-instant-markdown
 "     vim-surround
+"
 
 
 " Set <leader>
 let mapleader = ","
 
+" Gather help file when vim starts
+" :helptags ~/.vim/bundle/
 
 " +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-"   BUNDLES STUFF
+"   BUNDLE STUFF
 " +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 " pathogen
 execute pathogen#infect()
-
-" Gather help file when vim starts
-" :helptags ~/.vim/bundle/
 
 " NerdTree
 nmap <F4> :NERDTreeToggle<CR>
@@ -60,12 +61,6 @@ nmap <F4> :NERDTreeToggle<CR>
 " vim-arline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-
-" jedi-vim (requires python2-jedi on arch)
-" let g:jedi#documentation_command = "<leader> k"
-" let g:jedi#user_tabs_not_buffers = 0
-" let g:jedi#user_splits_not_buffers = "right"
-" let g:jedi#popu_on_dot = 0
 
 " BufferExplorer
 noremap <F9> :BufExplorer<CR>
@@ -88,9 +83,25 @@ let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#sources#syntax#min_keyword_length = 3
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
-" snipmate
-"   Snippet files are located in ~/.vim/bundle/snipmate.vim/snippets/
-"   use tabs to activate a snippet
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
+
+
 
 " +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 "   GENERAL
