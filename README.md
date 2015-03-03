@@ -179,9 +179,13 @@ o       open file under the cursor
 s       split verticaly
 i       split horizontaly
 
-SnipMate (plugin)
+Neosnippet
 -----------------
-Use tab to autocomplete
+Potential snippets appears in the NeoComplete pull down window automatically
+C-k     select-and-expand a snippet from the Neocomplcache popup or jump to the next snippet's field.
+C-n     Cycle next snippet
+C-p     Cycle previous snippet
+tab     Can be use instead of C-k to jump to the next field in the snippet
 
 Emmet (plugin)
 --------------
