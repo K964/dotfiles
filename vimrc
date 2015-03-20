@@ -4,7 +4,7 @@
 "              | |/ / / / / / / / /  / /__  
 "              |___/_/_/ /_/ /_/_/   \___/  
 "               ============================
-"                           K-9
+"                           K9
 
 
 "
@@ -41,6 +41,9 @@
 
 " Set <leader>
 let mapleader = ","
+
+" Free up bindings
+map <c-f> <Nop>
 
 " Gather help file when vim starts
 " :helptags ~/.vim/bundle/
@@ -101,6 +104,11 @@ if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
 
+" Emmet (ZenCoding)
+let g:user_emmet_leader_key = '<c-f>'
+
+" vim instant markdow
+let g:instant_markdown_slow = 1
 
 
 " +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -321,6 +329,10 @@ nnoremap <silent> <leader>c :set nolist!<CR>
 
 " Moving around
 " ---------------------
+" Scroll up and down by 5 lines without moving the cursor
+noremap <C-y> 5<C-y>
+noremap <C-e> 5<C-e>
+
 " Move between windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
