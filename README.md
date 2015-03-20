@@ -1,4 +1,4 @@
-K-9's dotfiles
+K9's dotfiles
 ========
 
 Use it at your own risks.
@@ -11,7 +11,7 @@ Use it at your own risks.
         /_/ |_\___/\__, /  /_____/_/_/ /_/\__,_/_/_/ /_/\__, /____/
                   /____/                               /____/
         =============================================================
-                                    K-9
+                                    K9
 ```
 
 ### tmux
@@ -22,12 +22,13 @@ C-b h       left
 C-b l       right
 
 C-b c       Create new window
+C-b x       Ask before deleting the current window
 
 C-b w       List windows
 C-b q       List panes
 
-C-b " | C-b +   Split horizontaly
-C-b % | C-b \   Split verticaly
+C-b "       Split horizontaly
+C-b %       Split verticaly
 
 C-b up      Resize up
 C-b right   Resize right
@@ -43,9 +44,9 @@ Copy mode
 C-b pageUp  Enter copy/scrolling
 C-b [       Enter copy mode
 q           Exit copy mode (without selecting anything)
-return      Exit copy mode (without selecting anything)
 space       Start selecting
-return      Copy selection 
+return      Copy selection and exit (can be used to exit)
+C-b ]       Paste selection
 ```
 
 ### vim
@@ -62,8 +63,10 @@ Useful commands
 :Explore        Open explorer (usefull for rename files pressing R on desired file)
 :on             Close all other split
 ```
-Many commands accept prefix quantifiers ex: 3dd means delete 3 lines
+Bindings
 ```
+Many commands accept prefix quantifiers ex: 3dd means delete 3 lines
+
 F5      Paste mode
 F4      Toggle NerdTree
 F8      Toggle Ctags
@@ -98,12 +101,12 @@ u       Undo
 dw      Delete word
 o       Open a new line below
 O       Open a new line above
-~       Toggle case for the current character 
+~       Toggle case for the current character
 x       Delete at current position
-X       Delete before current position 
+X       Delete before current position
 
 indenting may use modifiers like k,j or highlighted lines using visual modes (line or block)
-"<"l    Unindent current line 
+"<"l    Unindent current line
 >h      Indent current line
 
 Searching
@@ -139,6 +142,11 @@ L       bottom of the window
 w       forward one word
 e       forward end of word
 b       backward 1 word
+^y      Scroll up (without moving the cursor)
+^e      Scroll down (without moving the cursor)
+zz      Move cursor line to the middle of the screen
+zt      Move cursor line to the top of the screen
+zb      Move cursor line to the bottom of the screen
 
 Folding
 -------
@@ -152,7 +160,7 @@ J       Previous buffer
 Windows
 -------
 ^k      Window up
-^j      Window down 
+^j      Window down
 ^h      Window left
 ^l      Window right
 <       Resize current window left
@@ -189,7 +197,7 @@ tab     Can be use instead of C-k to jump to the next field in the snippet
 
 Emmet (plugin)
 --------------
-^Y,      Genereate
+^f,      Generate
 
 My functions
 ------------
@@ -198,4 +206,8 @@ leader q    Quit
 leader w    Save
 leader ws   Remove white spaces
 ```
-
+# Vimdiff
+```
+]c      Next modification
+[c      Previous modification
+```
