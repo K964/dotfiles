@@ -150,7 +150,10 @@ zb      Move cursor line to the bottom of the screen
 
 Folding
 -------
-zR      Open folds recursively
+zR      Open all folds recursively
+za      Open folds recursively below cursor
+zc      Close a fold
+zo      Open a fold
 
 Buffers
 -------
