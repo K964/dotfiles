@@ -36,6 +36,7 @@
 "     vim-go
 "     vim-instant-markdown
 "     vim-surround
+"     vim-less
 "
 
 
@@ -71,6 +72,11 @@ noremap <C-F9> :BufExplorerHorizontalSplit<CR>
 
 " vim-go
 let g:go_doc_keywordprg_enabled = 0
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
 
 " Tagbar
 nmap <F8> :TagbarToggle<CR>
@@ -192,8 +198,8 @@ autocmd BufWrite *.coffee :call StripWhitespace()
 " Folding
 " ------------------------
 " good for python maybe not for others...
-"set foldmethod=indent
-set foldnestmax=2
+set foldmethod=indent
+"set foldnestmax=2
 
 " Dirs
 " ------------------------
@@ -326,6 +332,9 @@ set pastetoggle=<F5>
 
 " Highlight end of line
 nnoremap <silent> <leader>c :set nolist!<CR>
+  
+" Call my less function (see below)
+nnoremap <leader>l :call CompileLess ()<CR>
 
 " Moving around
 " ---------------------
@@ -363,7 +372,8 @@ endif
 " Folding
 " ---------------------
 " Open a fold with space
-nmap <space> zR
+nmap <space> zo
+nmap <S-space> zc
 
 
 " +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -372,7 +382,7 @@ nmap <space> zR
 " JSON
 au BufRead,BufNewFile *.json set ft=json syntax=javascript
 " Less
-au BufRead,BufNewFile *.less set filetype=less syntax=css
+"au BufRead,BufNewFile *.less set filetype=less syntax=css
  
 
 " +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -395,6 +405,11 @@ function! StripWhitespace ()
     call setreg('/', old_query)
 endfunction
 
+" Compile less
+function CompileLess ()
+    let cmd = "!lessc main.less ../styles.css"
+    execute cmd
+endfunction
   
 " +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 " QUICKFIX
