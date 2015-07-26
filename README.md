@@ -38,7 +38,6 @@ C-b down    Resize down
 C-b ,       Rename window
 C-b t       Clock mode
 
-
 Copy mode
 ---------
 C-b pageUp  Enter copy/scrolling
@@ -47,6 +46,11 @@ q           Exit copy mode (without selecting anything)
 space       Start selecting
 return      Copy selection and exit (can be used to exit)
 C-b ]       Paste selection
+
+Useful commands (launch prompt using "[prefix] :")
+--------------------------------------------------
+swap-window -t [idx]        Swap current windows with the one at [idx]
+move-window -t [idx]        Move window to position [idx]
 ```
 
 ### vim

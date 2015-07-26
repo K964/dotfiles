@@ -77,6 +77,7 @@ let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
+let g:go_play_open_browser = 0
 
 " Tagbar
 nmap <F8> :TagbarToggle<CR>
@@ -173,7 +174,7 @@ set autochdir
 
 " Show the filename in the window title
 set title
-"set cursorline
+set cursorline
 
 " Always show the status line
 set laststatus=2
@@ -198,8 +199,10 @@ autocmd BufWrite *.coffee :call StripWhitespace()
 " Folding
 " ------------------------
 " good for python maybe not for others...
-set foldmethod=indent
+"set foldmethod=indent
 "set foldnestmax=2
+autocmd Syntax xml,html,go setlocal foldmethod=syntax
+autocmd Syntax xml,html,go normal zR
 
 " Dirs
 " ------------------------
@@ -383,6 +386,8 @@ nmap <S-space> zc
 au BufRead,BufNewFile *.json set ft=json syntax=javascript
 " Less
 "au BufRead,BufNewFile *.less set filetype=less syntax=css
+" TPL
+au BufRead,BufNewFile *.tpl set filetype=html syntax=html
  
 
 " +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
