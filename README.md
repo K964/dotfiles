@@ -36,6 +36,7 @@ C-b left    Resize left
 C-b down    Resize down
 
 C-b ,       Rename window
+C-b .       Move window to a given index
 C-b t       Clock mode
 
 Copy mode
@@ -53,6 +54,11 @@ swap-window -t [idx]        Swap current windows with the one at [idx]
 move-window -t [idx]        Move window to position [idx]
 ```
 
+###### Tmux Tips
+If you the pane/terminal seems to have freezed, hit `ctrl`+`Q` to re-enable flow control. 
+This is most likely happening because you hit `ctrl`+`S`, which turns off flow control in terminals and stops the terminal from accepting input.
+
+
 ### vim
 Useful commands
 ```
@@ -66,15 +72,17 @@ Useful commands
 :bufdo [cmd]    Execute cmd on all buffers
 :Explore        Open explorer (usefull for rename files pressing R on desired file)
 :on             Close all other split
+:set [option]   View the actual value for option
 ```
 Bindings
 ```
+:nmap   List all mappings
+
 Many commands accept prefix quantifiers ex: 3dd means delete 3 lines
 
 F5      Paste mode
 F4      Toggle NerdTree
-F8      Toggle Ctags
-F9      Toggle BufferExplorer
+F6      Toggle Ctags
 
 Modes
 -----
@@ -116,7 +124,7 @@ indenting may use modifiers like k,j or highlighted lines using visual modes (li
 Searching
 ---------
 /           Start search
-leader ,    Stop highlighting search result
+leader <CR> Stop highlighting search result
 n           Next found item
 N           Previous found item
 
@@ -154,10 +162,15 @@ zb      Move cursor line to the bottom of the screen
 
 Folding
 -------
+zM      Close all folds recursively
 zR      Open all folds recursively
-za      Open folds recursively below cursor
+Use capital version for recursive behaviour. ex: zA toggles fold recursively
+za      Toggle folds below the cursor
 zc      Close a fold
 zo      Open a fold
+Jumping folds
+zj      Move downwards to the start of the next fold.
+zk      Move upwards to the start of the next fold.
 
 Buffers
 -------
@@ -173,34 +186,38 @@ Windows
 <       Resize current window left
 >       Resize current window right
 
+Vim help
+--------
+:he [topic]         Open help file for [topic]
+<C-]>               Jump to quickref topic
+<C-t>               Go back to previous quickref topic
+:helptags [path]    Collect all help files from [path]
+
 Tabs
 ----
-C-n     Next tab
-C-p     Previous tab
 
-Surround (plugin)
+
+### Plugins 
+ 
+Golang
+-----------------
+[leader]+i    Run go info on the current selection
+[leader]+r    Run current file
+[leader]+b    Build current project
+[leader]+d    Run go doc on the current selection
+[leader]+f    Jump to the definition of selection
+ 
+Surround
 -----------------
 Press S-s after highlighting a string
 
-NeoComplete (plugin)
---------------------
-C-p     Select previous option
-C-n     Select next option
 
-NerdTree (plugin)
+NerdTree
 -----------------
 m       open file menu
 o       open file under the cursor
 s       split verticaly
 i       split horizontaly
-
-Neosnippet
------------------
-Potential snippets appears in the NeoComplete pull down window automatically
-C-k     select-and-expand a snippet from the Neocomplcache popup or jump to the next snippet's field.
-C-n     Cycle next snippet
-C-p     Cycle previous snippet
-tab     Can be use instead of C-k to jump to the next field in the snippet
 
 Emmet (plugin)
 --------------

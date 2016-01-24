@@ -9,122 +9,222 @@
 
 "
 " TODO:
-"  - Find a way close matching (, [, {
-"
-"
-" Tips:
-" *) Add or remove comments at begining of line  when in visual-block mode
-"    -press C-v to enter visual-block mode
-"    -select the lines to be commented
-"    -press C-c to add the comment or C-s to delete the comment characters
 "
 
-" Required plugins
-"     bufexplorer
-"     emmet-vim
-"     matchit
-"     neocomplete.vim
-"     neosnippet
-"     neosnippet-snippets
-"     nerdtree
-"     tagbar
-"     tags
-"     tlib_vim              (who needs this?)
-"     vim-addon-mw-utils    (who needs this?)
-"     vim-airline
-"     vim-colors-solarized
-"     vim-go
-"     vim-instant-markdown
-"     vim-surround
-"     vim-less
+" ==============================================================================
 "
+"                               Plugins (using Vbundle) 
+"
+" ==============================================================================
 
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
-" Set <leader>
-let mapleader = ","
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
 
-" Free up bindings
-map <c-f> <Nop>
+" Mandatory
+Plugin 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'xolox/vim-misc'               " Dependency for session
+Plugin 'xolox/vim-session'            " Session management
 
-" Gather help file when vim starts
-" :helptags ~/.vim/bundle/
+" Golang
+Plugin 'fatih/vim-go', {'for': 'go'}  " THE go plugin
+Plugin 'garyburd/go-explorer'         " For GoDoc
+Plugin 'SirVer/ultisnips'             " For awesome go snippets
 
-" +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-"   BUNDLE STUFF
-" +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+" Important
+Plugin 'tpope/vim-fugitive'           " Git integration
+Plugin 'tomtom/tcomment_vim'          " Commenting made easy
+Plugin 'scrooloose/nerdtree'          " File tree
+Plugin 'Raimondi/delimitMate'         " Auto-close brackets
+"Plugin 'rking/ag.vim'                 " For silver surfing
+Plugin 'majutsushi/tagbar'            " Tagbar
+Plugin 'ap/vim-buftabline'            " Buffer bar
+Plugin 'mattn/emmet-vim'              " Easy write HTML and CSS
 
-" pathogen
-execute pathogen#infect()
+" Nice to have
+Plugin 'itchyny/lightline.vim'        " Statusline
+"Plugin 'flazz/vim-colorschemes', { 'do': 'ln -s ~/.vim-go-runtime/plugged/vim-colorschemes/colors ~/.vim/colors' }
+"Plugin 'mhinz/vim-sayonara'           " Kill buffer without closing window
+Plugin 'altercation/vim-colors-solarized' " Solalired color theme
 
-" NerdTree
-nmap <F4> :NERDTreeToggle<CR>
+call vundle#end()            " required
+filetype plugin indent on    " required
+ 
+ 
 
-" Powerline
-"set rtp+=/home/peirik/.local/lib/python3.4/site-packages/powerline/bindings/vim
-
-" vim-arline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-
-" BufferExplorer
-noremap <F9> :BufExplorer<CR>
-noremap <C-F9> :BufExplorerHorizontalSplit<CR>
+" =======================================
+" Plugin configuration
+" =======================================
 
 " vim-go
-let g:go_doc_keywordprg_enabled = 0
+"let g:go_doc_keywordprg_enabled = 0
+"let g:go_highlight_functions = 1
+"let g:go_highlight_methods = 1
+"let g:go_highlight_structs = 1
+"let g:go_highlight_operators = 1
+"let g:go_highlight_build_constraints = 1
+"let g:go_fmt_fail_silently = 1
+"let g:go_fmt_autosave = 0 " Disable auto exec of gofmt because it folds everything on each save.
+
+"
+" Vim-Go
+"
+let g:go_fmt_fail_silently = 0
+let g:go_fmt_command = "goimports"
+let g:go_autodetect_gopath = 1
+
+let g:go_highlight_space_tab_error = 0
+let g:go_highlight_array_whitespace_error = 0
+let g:go_highlight_trailing_whitespace_error = 0
+let g:go_highlight_extra_types = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
-let g:go_play_open_browser = 0
+let g:go_doc_keywordprg_enabled = 0 "Disables the fucking S-k bindings that launches godoc.
 
+au FileType go nmap <Leader>i <Plug>(go-info)
+au FileType go nmap <Leader>r <Plug>(go-run)
+au FileType go nmap <Leader>b <Plug>(go-build)
+au FileType go nmap <Leader>d <Plug>(go-doc)
+au FileType go nmap <Leader>f <Plug>(go-def)
+
+"
+" DelimitMate
+"
+let g:delimitMate_expand_cr = 1     
+let g:delimitMate_expand_space = 1      
+let g:delimitMate_smart_quotes = 1      
+let g:delimitMate_expand_inside_quotes = 0
+
+"
 " Tagbar
-nmap <F8> :TagbarToggle<CR>
+"
+"nmap <Leader>m :TagbarToggle<CR>
+nmap <F6> :TagbarToggle<CR>
+let g:tagbar_width = 34
+let g:tagbar_type_go = {
+            \ 'ctagstype' : 'go',
+            \ 'kinds'     : [
+            \ 'p:package',
+            \ 'i:imports:1',
+            \ 'c:constants',
+            \ 'v:variables',
+            \ 't:types',
+            \ 'n:interfaces',
+            \ 'w:fields',
+            \ 'e:embedded',
+            \ 'm:methods',
+            \ 'r:constructor',
+            \ 'f:functions'
+            \ ],
+            \ 'sro' : '.',
+            \ 'kind2scope' : {
+            \ 't' : 'ctype',
+            \ 'n' : 'ntype'
+            \ },
+            \ 'scope2kind' : {
+            \ 'ctype' : 't',
+            \ 'ntype' : 'n'
+            \ },
+            \ 'ctagsbin'  : 'gotags',
+            \ 'ctagsargs' : '-sort -silent'
+            \ }
 
-" Neocomplete
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+"
+" Vim-Session
+"
+let g:session_autosave = 'yes'
+let g:session_autoload = 'yes'
 
-" Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
 
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
-
-" For snippet_complete marker.
-if has('conceal')
-  set conceallevel=2 concealcursor=i
-endif
-
+"
 " Emmet (ZenCoding)
+"
 let g:user_emmet_leader_key = '<c-f>'
 
+"
 " vim instant markdow
+"
 let g:instant_markdown_slow = 1
 
+"
+" lightline
+"
+let g:lightline = {
+      \ 'colorscheme': 'solarized',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'fugitive', 'filename' ] ]
+      \ },
+      \ 'component_function': {
+      \   'fugitive': 'LightLineFugitive',
+      \   'readonly': 'LightLineReadonly',
+      \   'modified': 'LightLineModified',
+      \   'filename': 'LightLineFilename'
+      \ },
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '', 'right': '' }
+      \ }
 
-" +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-"   GENERAL
-" +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+function! LightLineModified()
+  if &filetype == "help"
+    return ""
+  elseif &modified
+    return "+"
+  elseif &modifiable
+    return ""
+  else
+    return ""
+  endif
+endfunction
+
+function! LightLineReadonly()
+  if &filetype == "help"
+    return ""
+  elseif &readonly
+    return ""
+  else
+    return ""
+  endif
+endfunction
+
+function! LightLineFugitive()
+    if exists("*fugitive#head")
+        let _ = fugitive#head()
+        return strlen(_) ? ' '._ : ''
+    endif
+    return ''
+endfunction
+
+function! LightLineFilename()
+  return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+       \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
+       \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+endfunction
+
+
+
+
+" ==============================================================================
+"
+" 									GENERAL
+" 									
+" ==============================================================================
 
 " Sets how many lines of history VIM has to remember
 set history=700
 
+" Enable filetype plugins
+filetype plugin on
+filetype indent on
+  
 " Set to auto read when a file is changed from the outside
 set autoread
 
@@ -136,7 +236,6 @@ set hidden
 set noerrorbells
 set visualbell
 set t_vb=
-
 set tm=500
 
 " Set UTF-8 as standard encoding
@@ -147,6 +246,11 @@ set ffs=unix,dos,mac
 
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
+if has("win16") || has("win32")
+    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+else
+    set wildignore+=.git\*,.hg\*,.svn\*
+endif
 
 " Turn on Wildmenu
 set wildmenu
@@ -155,7 +259,10 @@ set wildmenu
 set number
 
 " When to start select mode instead of Visual mode, when a selection is started.
-set selectmode=mouse,key
+" In many terminal emulators the mouse works just fine, thus enable it.
+if has('mouse')
+  set mouse=a
+endif
 
 " Don't wrap line
 "set nowrap
@@ -186,9 +293,20 @@ set formatoptions=cro
 set lcs=tab:›\ ,trail:·,eol:¬,nbsp:_
 set fcs=fold:-
 
+" Don't redraw while executing macros (good performance config)
+set lazyredraw 
+
+" For regular expressions turn magic on
+set magic
+
+" Turn backup off, since most stuff is in SVN, git et.c anyway...
+set nobackup
+set nowb
+set noswapfile
+
 " Format the status line
 "set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
-set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \%=Line:\ %l,(%c)\ \ %{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\ \"}%k\ \ %P
+"set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \%=Line:\ %l,(%c)\ \ %{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\ \"}%k\ \ %P
 
 " Delete trailing white space on save, useful for Python (see function below)
 "autocmd BufWrite *.py :call DeleteTrailingWS()
@@ -196,22 +314,25 @@ set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \%=Line:\ %l,(%c)\ \ %
 autocmd BufWrite *.py :call StripWhitespace()
 autocmd BufWrite *.coffee :call StripWhitespace()
 
+" ++++++++++++++++++++++++++++
 " Folding
-" ------------------------
+" ++++++++++++++++++++++++++++
 " good for python maybe not for others...
 "set foldmethod=indent
 "set foldnestmax=2
-autocmd Syntax xml,html,go setlocal foldmethod=syntax
-autocmd Syntax xml,html,go normal zR
-
+autocmd BufRead *.xml,*.html,*.tpl,*.go setlocal foldmethod=syntax
+"autocmd BufRead *.xml,*.html,*.go normal zM
+ 
+" ++++++++++++++++++++++++++++
 " Dirs
-" ------------------------
+" ++++++++++++++++++++++++++++
 set backupdir=~/.vim/backups
 set directory=~/.vim/swap
 set undodir=~/.vim/undo
 
+" ++++++++++++++++++++++++++++
 " Search
-" ------------------------
+" ++++++++++++++++++++++++++++
 " Highlight search results
 set hlsearch
 
@@ -243,8 +364,8 @@ set timeoutlen=1300
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
 
-" Terminal has 256 colors (better themes colors :)
-set t_Co=256
+" Turn on the WiLd menu
+set wildmenu
 
 " Show current position
 set ruler
@@ -264,56 +385,126 @@ set tw=500
 
 "Wrap lines
 set wrap
-
-" Indentation
-" ---------------------
-"Smart indent
-set si
-
-"Auto indent
-set ai
-
-" set smartindent
-filetype plugin indent on
-
-" 1 tab == 4 spaces
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set expandtab
-
-" Theme
-" ---------------------
+ 
 " Activate syntax highlighting
 syntax on
 
+" ++++++++++++++++++++++++++++
+" Indentation
+" ++++++++++++++++++++++++++++
+" Use spaces instead of tabs
+set expandtab
+
+" Be smart when using tabs ;)
+set smarttab
+
+" 1 tab == 4 spaces
+set shiftwidth=4
+set tabstop=4
+
+set ai "Auto indent
+set si "Smart indent
+set wrap "Wrap lines
+
+" " ++++++++++++++++++++++++++++
+" SYNTAX
+" " ++++++++++++++++++++++++++++
+" JSON
+au BufRead,BufNewFile *.json set ft=json syntax=javascript
+" Less
+"au BufRead,BufNewFile *.less set filetype=less syntax=css
+" TPL
+autocmd BufRead,BufNewFile *.tpl setlocal filetype=html syntax=html foldmethod=syntax
+ 
+
+" " ++++++++++++++++++++++++++++
+" FUNCTIONS
+" " ++++++++++++++++++++++++++++
+  
+" Delete trailing white space on save, useful for Python
+"func! DeleteTrailingWS()
+"    exe "normal mz"
+"    %s/\s\+$//ge
+"    exe "normal `z"
+"endfunc
+
+" Strip trailing whitespace (<leader>ss)
+function! StripWhitespace ()
+    let save_cursor = getpos(".")
+    let old_query = getreg('/')
+    :%s/\s\+$//e
+    call setpos('.', save_cursor)
+    call setreg('/', old_query)
+endfunction
+
+" Compile less
+function CompileLess ()
+    let cmd = "!lessc main.less ../styles.css"
+    execute cmd
+endfunction
+  
+" " ++++++++++++++++++++++++++++
+" QUICKFIX
+" " ++++++++++++++++++++++++++++
+" Fixs a bug where the window when splited shrinks by moving it or altTabing
+" Removed e and L from the normal options
+" Use :set guioptions? to check the set values
+:set guioptions=egmrtT
+
+
+
+
+" ==============================================================================
+"
+" 									THEME
+"
+" ==============================================================================
+
 " Color theme
 set background=dark
-colorscheme solarized "jellybeans blackboard wombat256 molokai
+
+try
+    colorscheme solarized "jellybeans blackboard wombat256 molokai
+catch
+endtry
 
 " Highlight column 100 and beyong
 let &colorcolumn=join(range(101,999),",")
 highlight ColorColumn ctermbg=232 guibg=#242423
 
+
 " Set extra options when running in GUI mode
 if has("gui_running")
     set guioptions-=T
     set guioptions-=e
-    set guitablabel=%M\ %
-    set guifont=Source\ Code\ Pro\ for\ Powerline\ 10
+    set guitablabel=%M\ %t
+    set guifont=Inconsolata\ for\ Powerline\ 10
     "set guifont=Inconsolata\ Medium\ 11
+    " Terminal has 256 colors (better themes colors :)
+    set t_Co=256
 endif
 
 
-" +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-"   BINDINGS
-" +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+" ==============================================================================
+"
+" 									BINDINGS
+"
+" ==============================================================================
+
+" Set <leader>
+let mapleader = ","
+let g:mapleader = ","
+
+" Free up bindings
+map <c-f> <Nop>
 
 " Exit insert mode
 inoremap kj <Esc>
 
-" Disable highlight when <leader><cr> is pressed
-map <silent> <leader><cr> :noh<cr>
+" :W sudo saves the file 
+" (useful for handling the permission-denied error)
+"command W w !sudo tee % > /dev/null
 
 " Quickly close a buffer
 nmap <leader>q :confirm quit<CR>
@@ -323,6 +514,9 @@ nmap <leader>w :w<CR>
   
 " Remap VIM 0 to first non-blank character
 map 0 ^
+ 
+" Disable highlight when <leader><cr> is pressed
+map <silent> <leader><cr> :noh<cr>
 
 " Remove whitespace at end of line (see function below)
 nnoremap <leader>ws :call StripWhitespace ()<CR>
@@ -339,8 +533,9 @@ nnoremap <silent> <leader>c :set nolist!<CR>
 " Call my less function (see below)
 nnoremap <leader>l :call CompileLess ()<CR>
 
+" ++++++++++++++++++++++++++++
 " Moving around
-" ---------------------
+" ++++++++++++++++++++++++++++
 " Scroll up and down by 5 lines without moving the cursor
 noremap <C-y> 5<C-y>
 noremap <C-e> 5<C-e>
@@ -356,8 +551,8 @@ map <C-n> :tabnext <CR>
 map <C-p> :tabprev <CR>
 
 " Move between buffers
-map <S-k> :bn <CR>
-map <S-j> :bp <CR>
+nnoremap <S-k> :bn <CR>
+nnoremap <S-j> :bp <CR>
 
 if has("gui_running")
     " Alt+leftarrow will go one window left, etc. GUI only!
@@ -372,54 +567,44 @@ if has("gui_running")
     nmap <silent> <A-Right> :wincmd l<CR>
 endif
 
-" Folding
-" ---------------------
-" Open a fold with space
-nmap <space> zo
-nmap <S-space> zc
+" ++++++++++++++++++++++++++++
+" Visual mode related
+" ++++++++++++++++++++++++++++
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+vnoremap <silent> * :call VisualSelection('f', '')<CR>
+vnoremap <silent> # :call VisualSelection('b', '')<CR>
 
-
-" +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-" SYNTAX
-" +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-" JSON
-au BufRead,BufNewFile *.json set ft=json syntax=javascript
-" Less
-"au BufRead,BufNewFile *.less set filetype=less syntax=css
-" TPL
-au BufRead,BufNewFile *.tpl set filetype=html syntax=html
+" Treat long lines as break lines (useful when moving around in them)
+" TODO test this
+"map j gj
+"map k gk
  
+" Switch CWD to the directory of the open buffer
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
-" +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-" 	FUNCTIONS
-" +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+" Specify the behavior when switching between buffers 
+try
+  set switchbuf=useopen,usetab,newtab
+  set stal=2
+catch
+endtry
+
+" Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
+nmap <M-j> mz:m+<cr>`z
+nmap <M-k> mz:m-2<cr>`z
+vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
   
-" Delete trailing white space on save, useful for Python
-"func! DeleteTrailingWS()
-"    exe "normal mz"
-"    %s/\s\+$//ge
-"    exe "normal `z"
-"endfunc
+" NerdTree
+nmap <F4> :NERDTreeToggle<CR>
 
-" Strip trailing whitespace (\ss)
-function! StripWhitespace ()
-    let save_cursor = getpos(".")
-    let old_query = getreg('/')
-    :%s/\s\+$//e
-    call setpos('.', save_cursor)
-    call setreg('/', old_query)
-endfunction
 
-" Compile less
-function CompileLess ()
-    let cmd = "!lessc main.less ../styles.css"
-    execute cmd
-endfunction
-  
-" +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-" QUICKFIX
-" +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-" Fixs a bug where the window when splited shrinks by moving it or altTabing
-" Removed e and L from the normal options
-" Use :set guioptions? to check the set values
-:set guioptions=egmrtT
+" ++++++++++++++++++++++++++++
+" Folding
+" ++++++++++++++++++++++++++++
+" Open a fold with space
+nmap <space> zA
+nmap <S-space> za
+
+
