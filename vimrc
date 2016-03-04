@@ -35,6 +35,7 @@ Plugin 'xolox/vim-session'            " Session management
 Plugin 'fatih/vim-go', {'for': 'go'}  " THE go plugin
 Plugin 'garyburd/go-explorer'         " For GoDoc
 Plugin 'SirVer/ultisnips'             " For awesome go snippets
+Plugin 'honza/vim-snippets'           " Snippets are separated from the engine. Add this if you want them:
 
 " Important
 Plugin 'tpope/vim-fugitive'           " Git integration
@@ -77,6 +78,7 @@ filetype plugin indent on    " required
 let g:go_fmt_fail_silently = 0
 let g:go_fmt_command = "goimports"
 let g:go_autodetect_gopath = 1
+let g:go_fmt_autosave = 0
 
 let g:go_highlight_space_tab_error = 0
 let g:go_highlight_array_whitespace_error = 0
@@ -94,6 +96,23 @@ au FileType go nmap <Leader>r <Plug>(go-run)
 au FileType go nmap <Leader>b <Plug>(go-build)
 au FileType go nmap <Leader>d <Plug>(go-doc)
 au FileType go nmap <Leader>f <Plug>(go-def)
+ 
+
+"
+" YouCompleteMe
+"
+let g:ycm_autoclose_preview_window_after_completion = 1
+ 
+
+"
+" UltiSnips
+"
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<c-a>"
+let g:UltiSnipsJumpForwardTrigger="<c-k>"
+let g:UltiSnipsJumpBackwardTrigger="<c-j>"
+" If you want :UltiSnipsEdit to split your window.
+"let g:UltiSnipsEditSplit="vertical"
 
 "
 " DelimitMate
@@ -547,8 +566,8 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Move between tabs
-map <C-n> :tabnext <CR>
-map <C-p> :tabprev <CR>
+"map <C-n> :tabnext <CR>
+"map <C-p> :tabprev <CR>
 
 " Move between buffers
 nnoremap <S-k> :bn <CR>
