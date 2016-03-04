@@ -52,6 +52,9 @@ Useful commands (launch prompt using "[prefix] :")
 --------------------------------------------------
 swap-window -t [idx]        Swap current windows with the one at [idx]
 move-window -t [idx]        Move window to position [idx]
+
+tmux list-clients       List all attached clients to the tmux server
+tmux list-sessions      List available session that you can attach to
 ```
 
 ###### Tmux Tips
@@ -171,6 +174,9 @@ zo      Open a fold
 Jumping folds
 zj      Move downwards to the start of the next fold.
 zk      Move upwards to the start of the next fold.
+Only when foldmethod = manual
+zf      Create a fold 
+zd      Delete a fold
 
 Buffers
 -------
@@ -207,9 +213,9 @@ Golang
 [leader]+d    Run go doc on the current selection
 [leader]+f    Jump to the definition of selection
  
-Surround
------------------
-Press S-s after highlighting a string
+<!--- Surround --->
+<!--- ----------------- --->
+<!--- Press S-s after highlighting a string --->
 
 
 NerdTree
